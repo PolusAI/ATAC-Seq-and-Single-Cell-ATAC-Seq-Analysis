@@ -4,7 +4,6 @@ Image adapted from https://doi.org/10.1038/s41596-022-00692-9
    
    
 # An open-source interactive pipeline tutorial for differential ATAC-seq footprint analysis
-## INBRE Google Cloud Training Tutorials - ATAC-seq
 
 
 ## Overview
@@ -38,77 +37,25 @@ Watch this [Introduction Video](https://youtu.be/w5reYUKnf60) to learn more abou
 
 These tutorials were designed to be used on cloud computing platforms, with the aim of requiring nothing but the files within this GitHub repository.
 
-With this in mind, our tutorials use Jupyter Notebook files, which Google Cloud Platform, Amazon Web Services, and Microsoft Azure all provide support for. Therefore, requirements should only require creation of a virtual machine on one of these providers, and the downloading of this repositories files to the machine. It is important to note that submodule 4 uses a custom image created with Docker which has pre-requisite NVIDIA software and drivers installed for single cell analysis. GCP uses port 8080 for jupyterlab which allows this image to be opened in VertexAI. You'll see this reflected in the Dockerfile that is included in the Tutorial 4 directory. Steps to make the Dockerfile in GCP are included below and can be done from any VM or cloud shell. To reuse, `keen-clarity-352623` must be replaced with your own GCP project id and container registry or artifact registry must be active with the gcr.io repo inside.
-
-```
-docker build ./
-docker tag 2c44b046c59c gcr.io/keen-clarity-352623/nvidiaforvertexai-rapids-22.12-cuda11.5-runtime-ubuntu20.04-py3.9
-docker push gcr.io/keen-clarity-352623/nvidiaforvertexai-rapids-22.12-cuda11.5-runtime-ubuntu20.04-py3.9
-```
-
-
-For more information on creating a virtual machine and downloading our git repository to that machine, see the getting started section below. Currently this section only includes information on how to do this using Google Cloud Platform.
-
+With this in mind, our tutorials use Jupyter Notebook files, which are natively supported in Polus Notebooks Hub. Therefore, the only requirement is to create an appropriate environment module in your instance of Notebooks Hub based on included conda `environment.yaml`.
 
 ## Getting Started
 
 This repository contains several notebook files which serve as bioinformatics workflow tutorials.
 
-The below steps guide you through setting up a virtual machine on Google Cloud Platform, downloading our tutorial files, and running those files. 
+Begin by first navigating to your instance of Notebooks Hub, i.e. https://hub.scb-ncats.io and logging in with your credentials. Then, create a new JupyterLab server and make sure to select `atacseq-unmc-env` software environment in settings. Tutorials 1-3 only need CPU hardware, but Tutorial 4 calls for GPU option.
 
-Accordingly, before starting, make sure you have a Google account and have access to a Google Cloud Platform project.
+### Launching Server
 
-Once you have these, you can begin by first navigating to https://console.cloud.google.com/ and logging in with your credentials. Then, in the top-left of the screen, navigate to 'select a project', and choose the project you belong to.
-
-### Navigating to the Vertex AI Workbench
-
-Once a project has been selected, we can navigate to the Vertex AI Workbench, where we can make our virtual machine. 
-To get there, select the navigation menu, and navigate to 'Vertex AI' under the Artificial Intelligence section. 
-Within the Vertex AI submenu, select 'Workbench'.
-
-![ATAC-seq workflow](images/VertexAI.png)
-   
-   
-### Creating a Virtual Machine
-
-Within the Workbench screen, select the option to create a 'New Notebook'.
-
-Notebooks for submodules 1-3 use a GCP provided 'Python3' image. You can then choose a name for your virtual machine, you can name it whatever you like, and preferably choose a server location closest to you. Ignore the advanced options for now, and a default virtual machine will be created. A default machine(n1-standard-4) has 4 vCPUS and 15GB RAM which is sufficient for submodules 1-3 using the example dataset. Creating a machine may take a few minutes to finish.
-
-The notebook for submodule 4 uses a custom image called `nvidiaforvertexai-rapids-22.12-cuda11.5-runtime-ubuntu20.04-py3.9`. The n1-standard-8 machine type is sufficient for the example data used in this notebook. Remember to check yes to auto install required drivers and adjust your machine type under advanced options when you create your notebook, as shown below. 
-
-**Notebook Creation for submodules 1-3:**
-![ATAC-Seq workflow](images/Workbenchr.png)
-
-**Notebook Creation for submodule 4:**
-
-Step 1: In create new notebook, go to Environment --> Custom container 
-
-![ATAC-Seq workflow](images/WorkbenchSM4_Env.png) 
-  
-  
-Step 2: In Docker containter image select the latest tag for the container called `nvidiaforvertexai-rapids-22.12-cuda11.5-runtime-ubuntu20.04-py3.9`
-  
-![ATAC-Seq workflow](images/WorkbenchSM4_Img.png)
-  
-Step 3: Finally, in Machine Configuration use the following parameters to set up your machine. Make sure to select install NVIDIA Drivers. You can continue and create your machine. 
-  
-![ATAC-Seq workflow](images/WorkbenchSM4_GPU.png)
-
-
-### Starting Your Virtual Machine
-
-To start your virtual machine by clicking 'Open JupyerLab'. You will know it is running because of the green checkmark.
-
-Note, when you are finished running code, you should turn off your virtual machine to prevent unneeded billing or resource use by checking your notebook and pushing the 'Stop' button. 
-
-![ATAC-Seq workflow](images/StartStop.png)
+Once a server has been created, click green 'Start' button on a server card. Wait for the button to turn into 'Stop', indicating that the server is running and then click on green 'Launch' button in the bottom of the right sidebard. JupyterLab will open.
 
 ### Downloading Tutorial Files
 
-Now that you have created your virtual machine, and are in the JupyterLab screen, you can run our tutorial files. But first you will need to download them.
-The easiest way to do this would be to clone the NIGMS repository into your Vertex AI notebook. This can be done by using the 'Git' menu in JupyterLab, and selecting the clone option. 
-Next you can type in the link of repository: `https://github.com/NIGMS/ATAC-Seq-and-Single-Cell-ATAC-Seq-Analysis` and click 'Clone'. 
+Now that you have created your server, and are in the JupyterLab screen, you can run our tutorial files. But first you will need to download them. 
+
+The easiest way to do this would be to clone the NIGMS repository into your storage. Navigate to `work` folder in Notebooks Hub by double clicking on it (this way the files will stay available between restarts and your different servers). Using the 'Git' menu in JupyterLab, and select the clone option. 
+
+Next you can type in the link of repository: `https://github.com/PolusAI/ATAC-Seq-and-Single-Cell-ATAC-Seq-Analysis` and click 'Clone'. 
 
 This should download our repository, and the tutorial files inside, into a folder called 'atacseqUNMC'. Double-click this folder now. Inside you will find all our tutorial files, which you can double-click and run.
 
@@ -127,10 +74,6 @@ You can now explore the tutorials by running the code in each, from top to botto
 Jupyter is a powerful tool, with many useful features. For more information on how to use Jupyter, we recommend searching for Jupyter tutorials and literature online.
 
 ### Configuration for Submodule 4: Single-Cell Genomics Analysis with RAPIDS
-#### conda 
-All dependencies for these examples can be installed with conda.
-
-After installing the necessary dependencies, you can just run `jupyter lab notebook`.
 
 #### RAPIDS
 
@@ -144,18 +87,13 @@ rmm.reinitialize(managed_memory=True)
 cp.cuda.set_allocator(rmm.rmm_cupy_allocator)
 ```
 
-### Stopping Your Virtual Machine
+### Stopping Your Server
 
-When you are finished running code, you can turn off your virtual machine to prevent unneeded billing or resource use by checking your notebook and pushing the 'Stop' button.
+When you are finished running code, you can stop your server to prevent unneeded resource use by returning to Notebooks Hub and pressing the 'Stop' button on the server card.
 
 ## Workflows
 
-Our tutorials are broken down into 'workflows'. These can be downloaded and run locally, or you can use cloud services outlined in this README file. For example, these notebooks have been tested in Google Cloud using the Vertex AI Workbench to run Jupyter Notebooks.
-
-Each notebook file covers a specific workflow, which contains written and visual commentary, as well as the actual step-by-step code for running that workflow analysis. 
-
-For more information on how to run these in the cloud, navigate to the [Getting Started](#getting-started) section. Feel free to explore ad use these workflows however works best for you. Each one builds from the previous tutorial, but they also can stand alone if you already know the concepts in the early ones. 
-
+Our tutorials are broken down into 'workflows'. Each notebook file covers a specific workflow, which contains written and visual commentary, as well as the actual step-by-step code for running that workflow analysis. 
 
 ![ATAC-Seq workflow](images/ATACseqWorkflow.png)
 **Workflow for ATAC Sequencing (submodules 1 through 3)**
@@ -173,13 +111,6 @@ For more information on how to run these in the cloud, navigate to the [Getting 
 
 **[Tutorial Four](scATACseq_Tutorial4.ipynb):** In this section we will demonstrate a single cell ATAC-Seq analysis workflow. 
 
-## GCP Architecture Diagrams
-
-The below diagrams reflect the cloud services utilized to deploy our workflows on the Google Cloud Platform using VertexAI and Jupyter Notebooks. 
-![ATAC-Seq workflow](images/vertexAIArchitecture.png)
-![ATAC-Seq workflow](images/DetailedArchitecture.png)
-
-
 
 ## Data
 
@@ -192,4 +123,3 @@ The 4th notebook focusing on single cell analysis will use data from Lareau et a
 ## Funding
 
 Funded by the INBRE Program (NIH/NIGMS P20 GM103427).
-
