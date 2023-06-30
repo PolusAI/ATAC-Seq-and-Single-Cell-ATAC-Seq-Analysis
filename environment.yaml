@@ -22,7 +22,6 @@ dependencies:
   - deeptools=3.5.2
   - macs2=2.2.7.1
   - homer=4.11
-  - adjusttext=0.7.3
   - cudatoolkit=11.8
   - rapids=22.12
   - cuml=22.12
